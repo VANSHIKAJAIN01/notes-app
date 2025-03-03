@@ -1,6 +1,10 @@
 pipeline {
     agent any
-
+    environment {
+        DOCKER_IMAGE = "vanshikajain01/django-notes-app"
+        IMAGE_NAME   = "django-notes-app"
+        PATH         = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${env.PATH}"
+    }
     stages {
         stage("Code clone") {
             steps {

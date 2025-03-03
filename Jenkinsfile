@@ -5,7 +5,7 @@ pipeline {
         stage("Code clone") {
             steps {
                 sh "whoami"
-                git branch: 'main', url: 'https://github.com/VANSHIKAJAIN01/django-notes-app.git'
+                git branch: 'main', url: 'https://github.com/VANSHIKAJAIN01/notes-app.git'
             }
         }
         stage('Build') {

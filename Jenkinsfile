@@ -8,11 +8,6 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/VANSHIKAJAIN01/django-notes-app.git'
             }
         }
-        stage("Code Build") {
-            steps {
-                sh "docker build -t notes-app:latest ."
-            }
-        }
         stage('Build') {
             steps {
                 script {

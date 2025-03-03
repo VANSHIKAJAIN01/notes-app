@@ -13,6 +13,24 @@ pipeline {
                 sh "docker build -t notes-app:latest ."
             }
         }
+        stage('Build') {
+            steps {
+                script {
+                    // Build the Docker image and tag it with the build number.
+                    dockerImage = docker.build("${IMAGE_NAME}:${env.BUILD_NUMBER}")
+                }
+            }
+        }
+        stage('Container Vulnerability Scan - Trivy') {
+            steps {
+                script {
+                    // Run Trivy to scan the newly built image.
+                    sh '''
+                        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ${IMAGE_NAME}:${BUILD_NUMBER}
+                    '''
+                }
+            }
+        }
         stage("Push to DockerHub") { 
             steps {
                 withDockerRegistry([credentialsId: 'dockerHubCreds', url: '']) {
